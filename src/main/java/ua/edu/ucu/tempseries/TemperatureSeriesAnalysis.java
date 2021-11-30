@@ -1,7 +1,6 @@
 package ua.edu.ucu.tempseries;
 
 import java.util.InputMismatchException;
-import java.lang.IllegalArgumentException;
 
 public class TemperatureSeriesAnalysis {
 
@@ -14,6 +13,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+        final double minTemp = -273.0;
         if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException();
         }
@@ -26,7 +26,7 @@ public class TemperatureSeriesAnalysis {
 
         double[] arr = new double[size];
         for (int i = 0; i < num; i++) {
-            if (temperatureSeries[i] < -273) {
+            if (temperatureSeries[i] < minTemp) {
                 throw new InputMismatchException();
             }
             arr[i] = temperatureSeries[i];
@@ -47,13 +47,13 @@ public class TemperatureSeriesAnalysis {
 
     public double deviation() {
         double avg = average();
-        double quad_sum = 0;
+        double quadSum = 0;
         for (double d:this.temperatureSeries) {
-            quad_sum += Math.pow(d - avg, 2);
+            quadSum += (d - avg) * (d - avg);
         }
-        quad_sum = quad_sum / this.num;
-        quad_sum = Math.pow(quad_sum, 0.5);
-        return quad_sum;
+        quadSum = quadSum / this.num;
+        quadSum = Math.pow(quadSum, 0.5);
+        return quadSum;
     }
 
     public double min() {
@@ -67,7 +67,8 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double max() {
-        double max = -100000000000000000000.0;
+        final double minSize = -100000000000000000000.0;
+        double max = minSize;
         for (double d:this.temperatureSeries) {
             if (d > max) {
                 max = d;
@@ -77,29 +78,30 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToZero() {
-        double min_diff = Double.MAX_VALUE;
+        double minDiff = Double.MAX_VALUE;
         for (double d:this.temperatureSeries) {
-            if (Math.abs(d) < Math.abs(min_diff)) {
-                min_diff = d;
+            if (Math.abs(d) < Math.abs(minDiff)) {
+                minDiff = d;
             }
-            else if (Math.abs(d) == Math.abs(min_diff) && d > min_diff) {
-                min_diff = d;
+            else if (Math.abs(d) == Math.abs(minDiff) && d > minDiff) {
+                minDiff = d;
             }
         }
-        return min_diff;
+        return minDiff;
     }
 
     public double findTempClosestToValue(double tempValue) {
-        double min_diff = Double.MAX_VALUE;
+        double minDiff = Double.MAX_VALUE;
         for (double d:this.temperatureSeries) {
-            if (Math.abs(d - tempValue) < Math.abs(min_diff - tempValue)) {
-                min_diff = d;
+            if (Math.abs(d - tempValue) < Math.abs(minDiff - tempValue)) {
+                minDiff = d;
             }
-            else if (Math.abs(d - tempValue) == Math.abs(min_diff - tempValue) && d > min_diff) {
-                min_diff = d;
+            else if (Math.abs(d - tempValue) ==
+                    Math.abs(minDiff - tempValue) && d > minDiff) {
+                minDiff = d;
             }
         }
-        return min_diff;
+        return minDiff;
     }
 
     public double[] findTempsLessThen(double tempValue) {
@@ -138,11 +140,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
+        final double minTemp = -273.0;
         int len = temps.length;
         boolean changedSize = false;
 
         for (double d:temps) {
-            if (d < -273) {
+            if (d < minTemp) {
                 throw new InputMismatchException();
             }
         }
