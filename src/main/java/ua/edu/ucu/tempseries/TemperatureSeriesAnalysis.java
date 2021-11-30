@@ -13,7 +13,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        final double minTemp = -273.0;
+        final double MIN_TEMP = -273.0;
         if (temperatureSeries.length == 0) {
             throw new IllegalArgumentException();
         }
@@ -26,7 +26,7 @@ public class TemperatureSeriesAnalysis {
 
         double[] arr = new double[size];
         for (int i = 0; i < num; i++) {
-            if (temperatureSeries[i] < minTemp) {
+            if (temperatureSeries[i] < MIN_TEMP) {
                 throw new InputMismatchException();
             }
             arr[i] = temperatureSeries[i];
@@ -67,8 +67,8 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double max() {
-        final double minSize = -100000000000000000000.0;
-        double max = minSize;
+        final double MIN_SIZE = -100000000000000000000.0;
+        double max = MIN_SIZE;
         for (double d:this.temperatureSeries) {
             if (d > max) {
                 max = d;
@@ -96,8 +96,8 @@ public class TemperatureSeriesAnalysis {
             if (Math.abs(d - tempValue) < Math.abs(minDiff - tempValue)) {
                 minDiff = d;
             }
-            else if (Math.abs(d - tempValue) ==
-                    Math.abs(minDiff - tempValue) && d > minDiff) {
+            else if (Math.abs(d - tempValue)
+                    == Math.abs(minDiff - tempValue) && d > minDiff) {
                 minDiff = d;
             }
         }
@@ -140,12 +140,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
-        final double minTemp = -273.0;
+        final double MIN_TEMP = -273.0;
         int len = temps.length;
         boolean changedSize = false;
 
         for (double d:temps) {
-            if (d < minTemp) {
+            if (d < MIN_TEMP) {
                 throw new InputMismatchException();
             }
         }
