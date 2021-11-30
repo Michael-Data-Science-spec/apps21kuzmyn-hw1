@@ -3,8 +3,6 @@ package ua.edu.ucu.tempseries;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import java.sql.SQLOutput;
-
 public class TemperatureSeriesAnalysisTest {
 
     @Test
@@ -20,6 +18,14 @@ public class TemperatureSeriesAnalysisTest {
         // compare expected result with actual result
         assertEquals(expResult, actualResult, 0.00001);
     }
+
+    @Test
+    public void testEmptyConstructor() {
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis();
+
+        // call tested method
+        seriesAnalysis.average();
+}
 
     @Test(expected = IllegalArgumentException.class)
     public void testAverageWithEmptyArray() {
@@ -180,5 +186,19 @@ public class TemperatureSeriesAnalysisTest {
         assertEquals(max, actualResult.getMaxTemp(), 0.00001);
         assertEquals(min, actualResult.getMinTemp(), 0.00001);
         assertEquals(dev, actualResult.getDevTemp(), 0.00001);
+    }
+
+    @Test
+    public void testAddTemps() {
+        double[] temperatureSeries = {3.0, -5.0, 1.0, 5.0};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+
+        int expResult = 5;
+
+        // call tested method
+        int actualResult = seriesAnalysis.addTemps(3.0);
+
+        // compare expected result with actual result
+        assertEquals(expResult, actualResult);
     }
 }

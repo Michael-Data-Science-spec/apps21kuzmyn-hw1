@@ -10,8 +10,7 @@ public class TemperatureSeriesAnalysis {
     private int num;
 
     public TemperatureSeriesAnalysis() {
-        double[] temperatureSeries = new double[size];
-        this.temperatureSeries = temperatureSeries;
+        this.temperatureSeries = new double[size];
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
@@ -135,8 +134,7 @@ public class TemperatureSeriesAnalysis {
         double devTemp = deviation();
         double minTemp = min();
         double maxTemp = max();
-        TempSummaryStatistics tempSummaryStatistics = new TempSummaryStatistics(avgTemp, devTemp, minTemp, maxTemp);
-        return tempSummaryStatistics;
+        return new TempSummaryStatistics(avgTemp, devTemp, minTemp, maxTemp);
     }
 
     public int addTemps(double... temps) {
