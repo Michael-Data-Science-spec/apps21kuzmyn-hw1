@@ -37,137 +37,97 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double average() {
-        if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException();
+        double avg = 0;
+        for (double d:this.temperatureSeries) {
+            avg += d;
         }
 
-        else {
-            double avg = 0;
-            for (double d:this.temperatureSeries) {
-                avg += d;
-            }
-
-            avg = avg / this.num;
-            return avg;
-        }
+        avg = avg / this.num;
+        return avg;
     }
 
     public double deviation() {
-        if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException();
+        double avg = average();
+        double quad_sum = 0;
+        for (double d:this.temperatureSeries) {
+            quad_sum += Math.pow(d - avg, 2);
         }
-        else {
-            double avg = average();
-            double quad_sum = 0;
-            for (double d:this.temperatureSeries) {
-                quad_sum += Math.pow(d - avg, 2);
-            }
-            quad_sum = quad_sum / this.num;
-            quad_sum = Math.pow(quad_sum, 0.5);
-            return quad_sum;
-        }
+        quad_sum = quad_sum / this.num;
+        quad_sum = Math.pow(quad_sum, 0.5);
+        return quad_sum;
     }
 
     public double min() {
-        if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException();
-        }
-        else {
-            double min = Double.MAX_VALUE;
-            for (double d:this.temperatureSeries) {
-                if (d < min) {
-                    min = d;
-                }
+        double min = Double.MAX_VALUE;
+        for (double d:this.temperatureSeries) {
+            if (d < min) {
+                min = d;
             }
-            return min;
         }
+        return min;
     }
 
     public double max() {
-        if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException();
-        }
-        else {
-            double max = -100000000000000000000.0;
-            for (double d:this.temperatureSeries) {
-                if (d > max) {
-                    max = d;
-                }
+        double max = -100000000000000000000.0;
+        for (double d:this.temperatureSeries) {
+            if (d > max) {
+                max = d;
             }
-            return max;
         }
+        return max;
     }
 
     public double findTempClosestToZero() {
-        if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException();
-        }
-        else {
-            double min_diff = Double.MAX_VALUE;
-            for (double d:this.temperatureSeries) {
-                if (Math.abs(d) < Math.abs(min_diff)) {
-                    min_diff = d;
-                }
-                else if (Math.abs(d) == Math.abs(min_diff) && d > min_diff) {
-                    min_diff = d;
-                }
+        double min_diff = Double.MAX_VALUE;
+        for (double d:this.temperatureSeries) {
+            if (Math.abs(d) < Math.abs(min_diff)) {
+                min_diff = d;
             }
-            return min_diff;
+            else if (Math.abs(d) == Math.abs(min_diff) && d > min_diff) {
+                min_diff = d;
+            }
         }
+        return min_diff;
     }
 
     public double findTempClosestToValue(double tempValue) {
-        if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException();
-        }
-        else {
-            double min_diff = Double.MAX_VALUE;
-            for (double d:this.temperatureSeries) {
-                if (Math.abs(d - tempValue) < Math.abs(min_diff - tempValue)) {
-                    min_diff = d;
-                }
-                else if (Math.abs(d - tempValue) == Math.abs(min_diff - tempValue) && d > min_diff) {
-                    min_diff = d;
-                }
+        double min_diff = Double.MAX_VALUE;
+        for (double d:this.temperatureSeries) {
+            if (Math.abs(d - tempValue) < Math.abs(min_diff - tempValue)) {
+                min_diff = d;
             }
-            return min_diff;
+            else if (Math.abs(d - tempValue) == Math.abs(min_diff - tempValue) && d > min_diff) {
+                min_diff = d;
+            }
         }
+        return min_diff;
     }
 
     public double[] findTempsLessThen(double tempValue) {
-        if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException();
-        }
-        else {
-            double[] lessThan = new double[this.temperatureSeries.length];
-            int idx = 0;
+        double[] lessThan = new double[this.temperatureSeries.length];
+        int idx = 0;
 
-            for (double d:this.temperatureSeries) {
-                if (d < tempValue) {
-                    lessThan[idx] = d;
-                    idx += 1;
-                }
+        for (double d:this.temperatureSeries) {
+            if (d < tempValue) {
+                lessThan[idx] = d;
+                idx += 1;
             }
-            return lessThan;
         }
+        return lessThan;
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
-        if (this.temperatureSeries.length == 0) {
-            throw new IllegalArgumentException();
-        }
-        else {
-            double[] greaterThan = new double[this.temperatureSeries.length];
-            int idx = 0;
+        double[] greaterThan = new double[this.temperatureSeries.length];
+        int idx = 0;
 
-            for (double d:this.temperatureSeries) {
-                if (d >= tempValue) {
-                    greaterThan[idx] = d;
-                    idx += 1;
-                }
+        for (double d:this.temperatureSeries) {
+            if (d >= tempValue) {
+                greaterThan[idx] = d;
+                idx += 1;
             }
-            return greaterThan;
         }
+        return greaterThan;
+
     }
 
     public TempSummaryStatistics summaryStatistics() {
